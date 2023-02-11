@@ -10,12 +10,14 @@ export const initialState = {
   searchValue: '',
 }
 
+// search item in array by key, returns new array
 // also can be used regexp for finding whole word occurrence `^(.*?(\\b${value}\\b)[^$]*)$`
 const searchProperty = (array, value, key) => array.filter(item => item[key].indexOf(value) !== -1);
 
-export const reducer = (state, action) => {
-  console.log(action);
+// helper function to toggle value in array and return new array
+const toggleItemInArray = (array, value) => array.includes(value) ? array.filter(i => i !== value) : [ ...array, value ];
 
+export const reducer = (state, action) => {
   switch (action.type) {
     case 'DATA_LOADED':
       return {...state, properties: action.properties }
@@ -48,6 +50,7 @@ function App() {
     fetchPropertyData();
   }, []);
 
+  const toggleSave = (propertyId) => setSavedProperties(toggleItemInArray(savedProperties, propertyId))
   const properties = state.searchValue ? state.searchResult : state.properties;
 
   return (
@@ -55,7 +58,9 @@ function App() {
       <Header />
 
       <div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {!!properties && properties.map((property) => <PropertyCard key={property.property_id} property={property} />)}
+        {!!properties && properties.map((property) =>
+          <PropertyCard key={property.property_id} property={property} toggleSave={toggleSave} isSaved={savedProperties.includes(property.property_id)} />
+        )}
       </div>
     </div>
   );
