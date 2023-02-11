@@ -15,3 +15,21 @@ Feel free to add any other changes or flourishes to make your app stand out from
 Once you have completed the test, please upload it to Github and send us a link to the repo. Good luck!
 
 Use `npm install` to install dependencies and `npm start` to run the app locally.
+
+## Result
+
+The primary approach to the changes was:
+1. to use the existing design of files, code, etc.;
+2. maximize using existing libraries;
+3. adding small changes to code to make it readable between versions or on a code review;
+
+Notes:
+1. To reach functional requirements was used reducer and defined state;
+2. Context Provider used to encapsulate state and dispatch function across components;
+3. Context Provider was defined in `index.js` but can be moved to a separate file to increase readability;
+
+Non-functional notes:
+1. Added debounce decorator function to input search box;
+2. for the search was used simple function of finding the occurrence of the substring, but it also can be used regexp that can find entire words `^(.*?(\\b${word}\\b)[^$]*)$`;
+3. the user input search can be escaped to prevent XSS and can be added function of trim string and a minimum characters input; 
+
