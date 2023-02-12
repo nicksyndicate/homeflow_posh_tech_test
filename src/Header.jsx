@@ -10,6 +10,6 @@ function Header() {
       <SearchBox />
     </header>
   );
-};
+}
 
 export default Header;

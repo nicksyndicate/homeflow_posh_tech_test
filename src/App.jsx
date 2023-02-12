@@ -50,6 +50,27 @@ function App() {
     fetchPropertyData();
   }, []);
 
+  useEffect(() => {
+    let dataLS = [];
+
+    try {
+      dataLS = localStorage.getItem('savedProperties');
+      if (dataLS) dataLS = JSON.parse(dataLS);
+    } catch (e) {
+      //
+    }
+
+    if (dataLS && dataLS.length) {
+      setSavedProperties(dataLS);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (savedProperties) {
+      localStorage.setItem('savedProperties', JSON.stringify(savedProperties));
+    }
+  }, [savedProperties]);
+
   const toggleSave = (propertyId) => setSavedProperties(toggleItemInArray(savedProperties, propertyId))
   const properties = state.searchValue ? state.searchResult : state.properties;
 
